@@ -50,7 +50,7 @@
 - (id)objectForKey:(id<NSCopying>)key
 {
     self.lastRequestedKey = key;
-    return self.defaults[key];
+     return self.defaults[key];
 }
 
 - (NSString *)stringForKey:(id<NSCopying>)key
@@ -94,7 +94,7 @@
 
 - (void)registerDefaults:(NSDictionary *)dictionary
 {
-    [_defaults addEntriesFromDictionary:dictionary];
+    [self.defaults addEntriesFromDictionary:dictionary];
 }
 
 - (void)removeObjectForKey:(id<NSCopying>)key
@@ -104,18 +104,20 @@
 
 - (NSDictionary *)persistentDomainForName:(NSString *)domainName
 {
-    return _defaults;
+    return self.defaults[domainName];
 }
 
 - (void)setPersistentDomain:(NSDictionary<NSString *, id> *)domain forName:(NSString *)domainName {
+    self.defaults[domainName] = domain;
 }
 
 - (void)removePersistentDomainForName:(NSString *)domainName {
+    [self.defaults removeObjectForKey:domainName];
 }
 
 - (NSDictionary *)dictionaryRepresentation
 {
-    return _defaults.copy;
+    return self.defaults.copy;
 }
 
 @end

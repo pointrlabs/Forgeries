@@ -40,7 +40,7 @@
 
 /// Just offering up the full dictionary of the underlying data,
 /// as this is for testing, more introspective power is a priority
-@property (nonatomic, strong) NSMutableDictionary *defaults;
+@property (atomic, strong) NSMutableDictionary *defaults;
 
 /// Sets `hasSyncronised` to true, basically a NO-OP for compatability
 - (void)synchronize;
