@@ -30,6 +30,10 @@
     [self setObject:@(value) forKey:key];
 }
 
+- (void)setInteger:(NSInteger)value forKey:(id<NSCopying>)key {
+    [self setObject:@(value) forKey:key];
+}
+
 - (void)setObject:(id<NSCopying>)object forKey:(id<NSCopying>)key
 {
     self.lastSetKey = key;
@@ -101,6 +105,12 @@
 - (NSDictionary *)persistentDomainForName:(NSString *)domainName
 {
     return _defaults;
+}
+
+- (void)setPersistentDomain:(NSDictionary<NSString *, id> *)domain forName:(NSString *)domainName {
+}
+
+- (void)removePersistentDomainForName:(NSString *)domainName {
 }
 
 - (NSDictionary *)dictionaryRepresentation
