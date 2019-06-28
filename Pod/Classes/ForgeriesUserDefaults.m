@@ -99,9 +99,10 @@
     [self setObject:obj forKey:key];
 }
 
-- (void)synchronize
+- (BOOL)synchronize
 {
     self.hasSyncronised = YES;
+    return YES;
 }
 
 - (void)registerDefaults:(NSDictionary *)dictionary

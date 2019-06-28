@@ -33,20 +33,20 @@
 - (void)removeObjectForKey:(id<NSCopying>)key;
 
 /// Find out the last key that was set on the defaults
-@property (nonatomic, copy) id<NSCopying> lastSetKey;
+@property (atomic, copy) id<NSCopying> lastSetKey;
 
 /// Find out the last key that was requested on the default
-@property (nonatomic, copy) id<NSCopying> lastRequestedKey;
+@property (atomic, copy) id<NSCopying> lastRequestedKey;
 
 /// Just offering up the full dictionary of the underlying data,
 /// as this is for testing, more introspective power is a priority
 @property (atomic, strong) NSMutableDictionary *defaults;
 
 /// Sets `hasSyncronised` to true, basically a NO-OP for compatability
-- (void)synchronize;
+- (BOOL)synchronize;
 
 /// Set to false by default, so you can verify you've called it
-@property (nonatomic, assign) BOOL hasSyncronised;
+@property (atomic, assign) BOOL hasSyncronised;
 
 /// Easier introspection, basically forwards to `defaults`
 - (id)objectForKeyedSubscript:(id<NSCopying>)key;
