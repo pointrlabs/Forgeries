@@ -37,6 +37,9 @@
 - (void)setObject:(id<NSCopying>)object forKey:(id<NSCopying>)key
 {
     self.lastSetKey = key;
+    if(object) {
+        object = [NSNull null];
+    }
     self.defaults[key] = object;
 }
 
@@ -104,15 +107,15 @@
 
 - (NSDictionary *)persistentDomainForName:(NSString *)domainName
 {
-    return self.defaults[domainName];
+    return [self objectForKey:domainName];
 }
 
 - (void)setPersistentDomain:(NSDictionary<NSString *, id> *)domain forName:(NSString *)domainName {
-    self.defaults[domainName] = domain;
+    [self setObject:domain forKey:domainName];
 }
 
 - (void)removePersistentDomainForName:(NSString *)domainName {
-    [self.defaults removeObjectForKey:domainName];
+    [self removeObjectForKey:domainName];
 }
 
 - (NSDictionary *)dictionaryRepresentation
