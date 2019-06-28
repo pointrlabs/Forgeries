@@ -37,8 +37,17 @@
 - (void)setObject:(id<NSCopying>)object forKey:(id<NSCopying>)key
 {
     self.lastSetKey = key;
-    if(object) {
-        object = [NSNull null];
+    if(!key) {
+        NSLog(@"❗❗❗ nil `key` was provided❗");
+        NSLog(@"==== OBJECT ====\n %@", object);
+        NSLog(@"==== STACK ====\n%@",[NSThread callStackSymbols]);
+        return;
+    }
+    if(!object) {
+        NSLog(@"❗❗❗ nil `object` was provided❗");
+        NSLog(@"==== KEY ====\n %@", key);
+        NSLog(@"==== STACK ====\n%@",[NSThread callStackSymbols]);
+        return;
     }
     self.defaults[key] = object;
 }
