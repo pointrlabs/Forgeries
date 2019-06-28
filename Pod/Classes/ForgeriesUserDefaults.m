@@ -49,7 +49,9 @@
         NSLog(@"==== STACK ====\n%@",[NSThread callStackSymbols]);
         return;
     }
-    self.defaults[key] = object;
+    @synchronized (self) {
+        self.defaults[key] = object;
+    }
 }
 
 - (BOOL)boolForKey:(id<NSCopying>)key
@@ -62,7 +64,11 @@
 - (id)objectForKey:(id<NSCopying>)key
 {
     self.lastRequestedKey = key;
-     return self.defaults[key];
+    id object;
+    @synchronized (self) {
+       object = self.defaults[key];
+    }
+    return object;
 }
 
 - (NSString *)stringForKey:(id<NSCopying>)key
@@ -107,12 +113,16 @@
 
 - (void)registerDefaults:(NSDictionary *)dictionary
 {
-    [self.defaults addEntriesFromDictionary:dictionary];
+    @synchronized (self) {
+        [self.defaults addEntriesFromDictionary:dictionary];
+    }
 }
 
 - (void)removeObjectForKey:(id<NSCopying>)key
 {
-    [self.defaults removeObjectForKey:key];
+    @synchronized (self) {
+        [self.defaults removeObjectForKey:key];
+    }
 }
 
 - (NSDictionary *)persistentDomainForName:(NSString *)domainName
@@ -130,7 +140,11 @@
 
 - (NSDictionary *)dictionaryRepresentation
 {
-    return self.defaults.copy;
+    NSDictionary *repr;
+    @synchronized (self) {
+        repr = self.defaults.copy;
+    }
+    return repr;
 }
 
 @end
